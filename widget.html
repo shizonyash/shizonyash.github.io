@@ -3,9 +3,56 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Hi! You should put that in <'iframe'> tag</title>
+        <title>shizonyash webring widget</title>
+        <link rel="stylesheet" href="css/style_widget.css">
     </head>
     <body>
-        
+        <div class="wr-title"><i>shizonyash webring :3</i></div>
+
+        <div class="wr-nav">
+            <a id="prev" href="#" target="_top">&larr;</a>
+            <div class="wr-current">
+                you are at<br>
+                <b id="site-name">...</b>
+            </div>
+            <a id="next" href="#" target="_top">&rarr;</a>
+        </div>
+
+        <script>
+            const members = [
+                { name: "somedott.space", url: "https://somedott.space/" },
+                { name: "tasory.is-a.dev", url: "https://tasory.is-a.dev/" },
+                { name: "sakeyo.space", url: "https://sakeyo.space/" },
+                { name: "meow.furrysobachka.ru", url: "https://meow.furrysobachka.ru/" }
+            ];
+
+            function getParam(name) {
+                const params = new URLSearchParams(window.location.search);
+                return params.get(name);
+            }
+
+            function getCurrentIndex() {
+                const id = getParam("id");
+                if (id !== null) {
+                    const i = members.findIndex(m => m.name === id);
+                    if (i !== -1) return i;
+                }
+                // fallback: detect from parent hostname (same-origin only)
+                try {
+                    const host = window.parent.location.hostname;
+                    const i = members.findIndex(m => host.includes(m.name));
+                    if (i !== -1) return i;
+                } catch (e) {}
+                return 0;
+            }
+
+            const idx = getCurrentIndex();
+            const prev = (idx - 1 + members.length) % members.length;
+            const next = (idx + 1) % members.length;
+
+            document.getElementById("site-name").textContent = members[idx].name;
+            document.getElementById("prev").href = members[prev].url;
+            document.getElementById("next").href = members[next].url;
+        </script>
     </body>
 </html>
