@@ -13,7 +13,7 @@ body {
 
 @font-face {
   font-family:      'pixelbasel'; 
-  src:              url(./fonts/Pixelbasel.ttf) format('opentype'); 
+  src:              url(https://shizonyash.github.io/fonts/Pixelbasel.ttf) format('opentype'); 
   font-weight:      normal; 
   font-style:       normal;  
   font-display:     swap;  
