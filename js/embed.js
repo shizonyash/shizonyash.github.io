@@ -8,6 +8,72 @@
   const base = new URL('../', script.src);
   const site = script.dataset.site;
   const selector = script.dataset.target;
+  // Original widget appearance, scoped to the embed only.
+  // Override --sw-* variables on .shizonyash-webring from your own CSS.
+  const css = `
+    .shizonyash-webring {
+      --sw-background: #3F2E3D;
+      --sw-color: #DDD4F5;
+      --sw-accent: #8B8BC0;
+      --sw-accent-hover: #BAB8E0;
+      --sw-title-size: 20px;
+      --sw-text-size: 16px;
+      --sw-arrow-size: 30px;
+      --sw-gap: 12px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px;
+      width: 100%;
+      background: var(--sw-background);
+      color: var(--sw-color);
+      font-family: inherit;
+      font-style: normal;
+      font-synthesis: none;
+    }
+    .shizonyash-webring *, .shizonyash-webring *::before,
+    .shizonyash-webring *::after { box-sizing: border-box; }
+    .shizonyash-webring .shizonyash-title {
+      font-size: var(--sw-title-size);
+      text-align: center;
+      font-style: normal;
+    }
+    .shizonyash-webring .shizonyash-nav {
+      display: flex;
+      align-items: center;
+      gap: var(--sw-gap);
+    }
+    .shizonyash-webring .shizonyash-nav a {
+      color: var(--sw-accent);
+      text-decoration: none;
+      font-size: var(--sw-arrow-size);
+      font-weight: bold;
+      user-select: none;
+      transition: color .15s;
+    }
+    .shizonyash-webring .shizonyash-nav a:hover {
+      color: var(--sw-accent-hover);
+    }
+    .shizonyash-webring .shizonyash-current {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: var(--sw-text-size);
+      text-align: center;
+    }
+    .shizonyash-webring .shizonyash-site-name {
+      color: var(--sw-accent);
+    }
+  `;
+  if (!document.getElementById('shizonyash-embed-style')) {
+    const style = document.createElement('style');
+    style.id = 'shizonyash-embed-style';
+    style.textContent = css;
+    document.head.append(style);
+  }
 
   function mount() {
     const host = selector ? document.querySelector(selector) : script.parentElement;
